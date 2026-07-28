@@ -1,0 +1,4 @@
+project_id = "wrcrpagrfedggjarsnzf"
+
+[functions.mobile-upload]
+verify_jwt = false

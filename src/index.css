@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Shopify Polaris — admin design system (authentic tokens)
+   App canvas #f1f1f1 · white cards · #e3e3e3 hairlines ·
+   ink #303030 · near-black primary action · tone badges.
+   ============================================================ */
+@layer base {
+  :root {
+    --background: 0 0% 95%;             /* p-color-bg (app canvas) #f1f1f1 */
+    --foreground: 0 0% 19%;            /* p-color-text #303030 */
+
+    --card: 0 0% 100%;                  /* p-color-bg-surface #ffffff */
+    --card-foreground: 0 0% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 19%;
+
+    --primary: 0 0% 19%;               /* fill-brand #303030 (near-black) */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 0 0% 10%;         /* #1a1a1a */
+
+    --secondary: 0 0% 97%;             /* surface-secondary #f7f7f7 */
+    --secondary-foreground: 0 0% 19%;
+
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 38%;      /* text-secondary #616161 */
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 19%;
+
+    --destructive: 9 100% 45%;         /* critical #e51c00 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 89%;                /* p-color-border #e3e3e3 (card dividers) */
+    --border-strong: 0 0% 80%;
+    --input: 0 0% 80%;                 /* input border #ccc; a darker bottom edge is added per-field */
+    --ring: 217 89% 51%;               /* focus ring (Polaris focused #005bd3) */
+
+    --radius: 0.625rem;                /* → md (inputs/buttons) = 8px */
+
+    /* Polaris tone tokens (fill + text) */
+    --topbar: 0 0% 0%;                 /* pure black top bar (matches admin) */
+    --topbar-foreground: 0 0% 100%;
+
+    --success-bg: 150 92% 90%;         /* #cdfee1 */
+    --success-text: 151 74% 18%;       /* #0c5132 */
+    --success: 154 61% 28%;
+    --success-foreground: 0 0% 100%;
+
+    --warning-bg: 35 100% 81%;         /* #ffd79d */
+    --warning-text: 28 57% 20%;        /* #4f3417 */
+    --warning: 35 92% 52%;
+    --warning-foreground: 0 0% 19%;
+
+    --critical-bg: 6 100% 94%;         /* #ffdedb */
+    --critical-text: 9 84% 30%;        /* #8e1f0b */
+
+    --info-bg: 227 100% 93%;           /* #dbe1ff */
+    --info-text: 214 100% 22%;         /* #00306e */
+    --info: 217 89% 41%;
+    --info-foreground: 0 0% 100%;
+
+    --magic-bg: 258 100% 95%;
+    --magic-text: 264 65% 40%;
+
+    /* Polaris elevation: subtle, border-led */
+    --shadow-sm: 0 1px 0 rgb(0 0 0 / 0.05);
+    --shadow-card: 0 1px 0 rgb(0 0 0 / 0.04);
+    --shadow-md: 0 4px 12px rgb(0 0 0 / 0.10);
+    --shadow-button: 0 -1px 0 0 #b5b5b5 inset, 0 0 0 1px rgb(0 0 0 / 0.10) inset;
+    --shadow-lg: 0 8px 20px rgb(0 0 0 / 0.12);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer components {
+  /* Polaris Card: white surface, ~16px radius, hairline + faint shadow */
+  .p-card {
+    @apply bg-card rounded-2xl border border-border;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Polaris field: subtle darker bottom edge on inputs/selects/textarea */
+  .p-field {
+    box-shadow: inset 0 -1px 0 0 hsl(0 0% 76%);
+  }
+
+  .p-label {
+    @apply text-[13px] font-medium text-foreground mb-1 block;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
