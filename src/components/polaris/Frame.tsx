@@ -47,7 +47,7 @@ function TopBar() {
 
 function LeftNav() {
   return (
-    <aside className="w-[232px] flex-shrink-0 bg-[#f1f1f1] border-r border-border hidden lg:flex flex-col py-3 px-3">
+    <aside className="w-[232px] flex-shrink-0 bg-card border-r border-border hidden lg:flex flex-col py-3 px-3">
       <nav className="space-y-0.5">
         {NAV.map((item) => (
           <NavLink

@@ -6,12 +6,12 @@
 
 /* ============================================================
    Shopify Polaris — admin design system (authentic tokens)
-   App canvas #f1f1f1 · white cards · #e3e3e3 hairlines ·
+   App canvas #f2f2f2 · white cards · #e3e3e3 hairlines ·
    ink #303030 · near-black primary action · tone badges.
    ============================================================ */
 @layer base {
   :root {
-    --background: 0 0% 95%;             /* p-color-bg (app canvas) #f1f1f1 */
+    --background: 0 0% 95%;             /* p-color-bg (app canvas) #f2f2f2 */
     --foreground: 0 0% 19%;            /* p-color-text #303030 */
 
     --card: 0 0% 100%;                  /* p-color-bg-surface #ffffff */
