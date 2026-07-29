@@ -58,7 +58,7 @@ function LeftNav() {
               cn(
                 "flex items-center gap-2.5 px-2.5 h-[34px] rounded-lg text-[13px] font-medium transition-colors",
                 isActive
-                  ? "bg-card text-foreground shadow-[0_1px_2px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)]"
+                  ? "bg-primary/10 text-primary"
                   : "text-[#4a4a4a] hover:bg-black/[0.04]",
               )
             }

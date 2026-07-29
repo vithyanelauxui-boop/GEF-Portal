@@ -67,11 +67,11 @@ function HelpLink({ k, onHelp }: { k: string; onHelp: (k: string) => void }) {
   );
 }
 
-function RailIcon({ status }: { status: Status }) {
+function RailIcon({ status, active }: { status: Status; active?: boolean }) {
   if (status === "complete") return <span className="w-4 h-4 rounded-full bg-[hsl(var(--success))] flex items-center justify-center flex-shrink-0"><Check className="w-2.5 h-2.5 text-white" strokeWidth={3} /></span>;
   if (status === "error") return <AlertCircle className="w-4 h-4 text-[hsl(var(--critical-text))] flex-shrink-0" />;
   if (status === "in-progress") return <span className="w-4 h-4 rounded-full border-2 border-primary flex-shrink-0" style={{ background: "linear-gradient(90deg, hsl(var(--primary)) 50%, transparent 50%)" }} />;
-  return <Circle className="w-4 h-4 text-muted-foreground/40 flex-shrink-0" />;
+  return <Circle className={cn("w-4 h-4 flex-shrink-0", active ? "text-primary" : "text-muted-foreground/40")} />;
 }
 
 // ============================================================================
@@ -284,7 +284,7 @@ export default function NewProjectPage() {
         <div className="ml-auto flex items-center gap-2">
           <Button variant="plain" size="sm" className="text-white hover:bg-white/10" onClick={() => navigate("/")}>Discard</Button>
           <Button variant="secondary" size="sm" onClick={() => { setSavedAt(new Date()); toast({ title: "Draft saved" }); }}>Save draft</Button>
-          <Button size="sm" className="bg-white text-foreground hover:bg-white/90 shadow-none" onClick={handleValidate}>Save &amp; validate</Button>
+          <Button size="sm" className="bg-white text-primary hover:bg-white/90 shadow-none" onClick={handleValidate}>Save &amp; validate</Button>
         </div>
       </div>
 
@@ -313,9 +313,9 @@ export default function NewProjectPage() {
                         {grp.ids.map((id) => {
                           const active = activeSection === id;
                           return (
-                            <button key={id} onClick={() => scrollTo(id)} className={cn("w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-left transition-colors", active ? "bg-secondary" : "hover:bg-secondary/60")}>
-                              <RailIcon status={sectionStatuses[id]} />
-                              <span className={cn("text-[13px] font-medium truncate", active ? "text-foreground" : "text-foreground/80")}>{SECTION_META[id].title}</span>
+                            <button key={id} onClick={() => scrollTo(id)} className={cn("w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-left transition-colors", active ? "bg-primary/10" : "hover:bg-secondary/60")}>
+                              <RailIcon status={sectionStatuses[id]} active={active} />
+                              <span className={cn("text-[13px] font-medium truncate", active ? "text-primary" : "text-foreground/80")}>{SECTION_META[id].title}</span>
                             </button>
                           );
                         })}
