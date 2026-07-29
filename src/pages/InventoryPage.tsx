@@ -26,6 +26,7 @@ import {
   type SavedFilterView,
   countAdvancedConditions,
   emptyAdvancedFilter,
+  getStoredFilterViews,
 } from "@/components/inventory/AdvancedFilterModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -51,7 +52,6 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { useProducts, BASE_UOM_OPTIONS } from "@/contexts/ProductsContext";
-import { supabase } from "@/integrations/supabase/client";
 import {
   DndContext,
   closestCenter,
@@ -199,22 +199,11 @@ const InventoryPage = () => {
   const [advancedFilterOpen, setAdvancedFilterOpen] = useState(false);
   const [advancedFilter, setAdvancedFilter] = useState<AdvancedFilterState>(emptyAdvancedFilter());
 
-  // Saved views
+  // Saved views (persisted locally in the browser)
   const [savedViews, setSavedViews] = useState<SavedFilterView[]>([]);
   const fetchSavedViews = useCallback(async () => {
-    const { data } = await supabase
-      .from("saved_filter_views")
-      .select("*")
-      .order("created_at", { ascending: false });
-    if (data) {
-      setSavedViews(data.map((d: any) => ({
-        id: d.id,
-        name: d.name,
-        is_public: d.is_public,
-        filters: d.filters as AdvancedFilterState,
-        created_at: d.created_at,
-      })));
-    }
+    const stored = getStoredFilterViews();
+    setSavedViews(stored.sort((a, b) => b.created_at.localeCompare(a.created_at)));
   }, []);
 
   React.useEffect(() => {

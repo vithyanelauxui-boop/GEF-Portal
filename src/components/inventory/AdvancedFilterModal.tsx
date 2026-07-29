@@ -39,7 +39,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 // ─── Searchable multi-select for text field values ────────────
@@ -247,6 +246,21 @@ export interface SavedFilterView {
   is_public: boolean;
   filters: AdvancedFilterState;
   created_at: string;
+}
+
+const FILTER_VIEWS_STORAGE_KEY = "gef-portal.saved_filter_views";
+
+export function getStoredFilterViews(): SavedFilterView[] {
+  try {
+    const raw = localStorage.getItem(FILTER_VIEWS_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as SavedFilterView[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function setStoredFilterViews(views: SavedFilterView[]) {
+  localStorage.setItem(FILTER_VIEWS_STORAGE_KEY, JSON.stringify(views));
 }
 
 interface AdvancedFilterModalProps {
@@ -621,13 +635,15 @@ export function AdvancedFilterModal({
         }))
         .filter((g) => g.conditions.length > 0);
 
-      const { error } = await supabase.from("saved_filter_views").insert({
+      const newView: SavedFilterView = {
+        id: crypto.randomUUID(),
         name: viewName.trim(),
         is_public: isPublic,
-        filters: { groups: cleaned } as any,
-      });
+        filters: { groups: cleaned },
+        created_at: new Date().toISOString(),
+      };
+      setStoredFilterViews([...getStoredFilterViews(), newView]);
 
-      if (error) throw error;
       toast.success("View saved successfully");
       setViewName("");
       setIsPublic(false);
@@ -648,13 +664,9 @@ export function AdvancedFilterModal({
 
   const handleDeleteView = async (viewId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const { error } = await supabase.from("saved_filter_views").delete().eq("id", viewId);
-    if (error) {
-      toast.error("Failed to delete view");
-    } else {
-      toast.success("View deleted");
-      onViewsChanged();
-    }
+    setStoredFilterViews(getStoredFilterViews().filter((v) => v.id !== viewId));
+    toast.success("View deleted");
+    onViewsChanged();
   };
 
   const footerContent = (

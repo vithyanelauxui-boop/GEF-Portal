@@ -1,8 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Upload, X, GripVertical, Image, Film, Box, Youtube, Link2, ChevronLeft, ChevronRight, Sparkles, Type, Camera, ImageIcon, QrCode } from "lucide-react";
-import icImageEnhance from "@/assets/ic-image-enhance.svg";
-import { GenerateMediaModal } from "./GenerateMediaModal";
-import { QRUploadTab } from "./QRUploadTab";
+import { Upload, X, GripVertical, Image, Film, Box, Youtube, Link2, ChevronLeft, ChevronRight, Sparkles, Type, Camera, ImageIcon } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
@@ -55,8 +52,7 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
   const [activeTab, setActiveTab] = useState<string>("image");
   const [mobileUrlMode, setMobileUrlMode] = useState(false);
   const [mobileUrlInput, setMobileUrlInput] = useState("");
-  const [isGenerateOpen, setIsGenerateOpen] = useState(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const modelInputRef = useRef<HTMLInputElement>(null);
@@ -274,44 +270,17 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
     console.log("AI alt text generation - to be implemented");
   };
 
-  const handleGeneratedImages = useCallback((urls: string[]) => {
-    const newItems: MediaItem[] = urls.map((url, i) => ({
-      id: `ai-${Date.now()}-${i}`,
-      type: "image" as MediaType,
-      url,
-    }));
-    const updated = [...mediaItems, ...newItems];
-    setMediaItems(updated);
-    syncToParent(updated);
-  }, [mediaItems, syncToParent]);
-
   const maxSmallImages = 7;
   const visibleSmallMedia = mediaItems.slice(1, maxSmallImages + 1);
   const remainingCount = mediaItems.length - (maxSmallImages + 1);
 
-  const handleQrMediaAdded = useCallback((urls: string[]) => {
-    const newItems: MediaItem[] = urls
-      .filter((url) => !mediaItems.some((m) => m.url === url))
-      .map((url, i) => ({
-        id: `qr-${Date.now()}-${i}`,
-        type: "image" as MediaType,
-        url,
-      }));
-    if (newItems.length > 0) {
-      const updated = [...mediaItems, ...newItems];
-      setMediaItems(updated);
-      syncToParent(updated);
-    }
-  }, [mediaItems, syncToParent]);
-
   const addMediaTabsContent = (
     <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-4">
-      <TabsList className="grid grid-cols-5 w-full">
+      <TabsList className="grid grid-cols-4 w-full">
         <TabsTrigger value="image" className="gap-2"><Image className="w-4 h-4" />Image</TabsTrigger>
         <TabsTrigger value="video" className="gap-2"><Film className="w-4 h-4" />Video</TabsTrigger>
         <TabsTrigger value="3d" className="gap-2"><Box className="w-4 h-4" />3D</TabsTrigger>
         <TabsTrigger value="youtube" className="gap-2"><Youtube className="w-4 h-4" />YouTube</TabsTrigger>
-        <TabsTrigger value="qr" className="gap-2"><QrCode className="w-4 h-4" />Scan & Upload</TabsTrigger>
       </TabsList>
       <TabsContent value="image" className="mt-4">
         <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 transition-colors" onClick={() => fileInputRef.current?.click()}>
@@ -355,9 +324,6 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
             </div>
           )}
         </div>
-      </TabsContent>
-      <TabsContent value="qr" className="mt-4">
-        <QRUploadTab onMediaAdded={handleQrMediaAdded} />
       </TabsContent>
     </Tabs>
   );
@@ -490,19 +456,7 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
         <div className="upload-zone py-10">
           <div className="flex flex-col items-center gap-4">
             <div className="flex items-center gap-3">
-              <button 
-                type="button"
-                className="relative inline-flex items-center gap-2 h-9 px-4 rounded-full text-sm font-medium text-foreground hover:opacity-90 transition-opacity"
-                style={{
-                  background: "linear-gradient(white, white) padding-box, linear-gradient(88deg, #E0D0EE -14.85%, #9F80F8 21.47%, #1079E2 85.02%) border-box",
-                  border: "1.5px solid transparent",
-                }}
-                onClick={() => setIsGenerateOpen(true)}
-              >
-                <img src={icImageEnhance} alt="" className="w-4 h-4" />
-                Generate Media
-              </button>
-              <button 
+              <button
                 type="button"
                 className="inline-flex items-center gap-2 h-9 px-4 rounded-full border border-border bg-card text-sm font-medium text-foreground hover:bg-muted transition-colors"
                 onClick={() => setIsAddMediaOpen(true)}
@@ -517,7 +471,6 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
         </div>
 
         {renderAddMediaModal()}
-        <GenerateMediaModal open={isGenerateOpen} onOpenChange={setIsGenerateOpen} onImagesGenerated={handleGeneratedImages} />
       </div>
     );
   }
@@ -645,7 +598,6 @@ export function MediaUpload({ images, onImagesChange, maxVisible = 9 }: MediaUpl
       </div>
 
       {renderAddMediaModal()}
-      <GenerateMediaModal open={isGenerateOpen} onOpenChange={setIsGenerateOpen} onImagesGenerated={handleGeneratedImages} />
 
       {/* Gallery Modal */}
       <Dialog open={isGalleryOpen} onOpenChange={setIsGalleryOpen}>
