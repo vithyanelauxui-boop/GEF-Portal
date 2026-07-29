@@ -11,12 +11,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Primary: near-black brand fill with inset highlight
+        // Primary: brand blue fill with inset highlight
         default:
-          "bg-primary text-primary-foreground shadow-[0_-1px_0_0_rgba(0,0,0,0.8)_inset,0_1px_0_0_rgba(0,0,0,0.05)] hover:bg-[hsl(var(--primary-hover))]",
+          "bg-primary text-primary-foreground shadow-[0_-1px_0_0_rgba(0,0,0,0.25)_inset,0_1px_0_0_rgba(0,0,0,0.05)] hover:bg-[hsl(var(--primary-hover))]",
         // Secondary (default Polaris button): white with hairline + faint depth
         secondary:
-          "bg-card text-foreground shadow-[0_0_0_1px_rgba(0,0,0,0.08)_inset,0_-1px_0_0_#b5b5b5_inset,0_1px_0_0_rgba(0,0,0,0.04)] hover:bg-[#fafafa]",
+          "bg-card text-primary shadow-[0_0_0_1px_rgba(0,0,0,0.08)_inset,0_-1px_0_0_#b5b5b5_inset,0_1px_0_0_rgba(0,0,0,0.04)] hover:bg-[#fafafa]",
         outline:
           "bg-card text-foreground border border-[hsl(var(--border-strong))] hover:bg-secondary",
         // Tertiary / plain text button

@@ -20,9 +20,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 19%;
 
-    --primary: 0 0% 19%;               /* fill-brand #303030 (near-black) */
+    --primary: 240 89% 58%;            /* fill-brand #3535f3 */
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 0% 10%;         /* #1a1a1a */
+    --primary-hover: 240 89% 50%;      /* #0e0ef1 */
 
     --secondary: 0 0% 97%;             /* surface-secondary #f7f7f7 */
     --secondary-foreground: 0 0% 19%;
