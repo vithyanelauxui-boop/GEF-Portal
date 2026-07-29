@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { Search, Bell, ChevronDown, House, FolderKanban, BookOpen, LifeBuoy, Leaf } from "lucide-react";
+import { Search, Bell, ChevronDown, House, FolderKanban, BookOpen, LifeBuoy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import gefMark from "@/assets/gef-mark.svg";
 
 const NAV = [
   { label: "My Projects", href: "/", icon: House, end: true },
@@ -14,9 +15,7 @@ function TopBar() {
     <header className="h-14 bg-[hsl(var(--topbar))] text-[hsl(var(--topbar-foreground))] flex items-center gap-4 px-4 flex-shrink-0 z-30">
       {/* Brand */}
       <div className="flex items-center gap-2 min-w-[200px]">
-        <div className="w-7 h-7 rounded-md bg-[#00848e] flex items-center justify-center">
-          <Leaf className="w-4 h-4 text-white" />
-        </div>
+        <img src={gefMark} alt="" className="w-7 h-7" />
         <span className="text-[15px] font-semibold tracking-tight">GEF Portal</span>
       </div>
 
